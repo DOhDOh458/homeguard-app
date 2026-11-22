@@ -123,7 +123,6 @@
     <div class="footer"><button type="button" class="lock-btn" id="lockBtn">🔒 Lock Dashboard</button></div>
   </div>
 
-  <!-- 1. PIN Keypad Script Loads First (Always Works Offline) -->
   <script>
     const APP_PIN = "1234";
     let enteredPin = "";
@@ -171,16 +170,20 @@
     });
   </script>
 
-  <!-- 2. Reliable Cloudflare MQTT Library -->
-  <script src="https://cloudflare.com"></script>
+  <script src="https://jsdelivr.net"></script>
   <script>
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
 
-    const HIVEMQ_URL = "wss://broker.emqx.io:8084/mqtt";
+    // ✅ Standard Port 443 Secure WebSocket Broker
+    const BROKER_URL = "wss://mqtt.eclipseprojects.io:443/mqtt";
     const MQTT_TOPIC = "homeguard/secret_847291_mm/status";
 
     if (typeof mqtt !== "undefined") {
-      const client = mqtt.connect(HIVEMQ_URL, { clean: true });
+      const client = mqtt.connect(BROKER_URL, {
+        clientId: "web_" + Math.random().toString(16).substr(2, 8),
+        clean: true,
+        reconnectPeriod: 3000
+      });
       const connPill = document.getElementById("connPill");
       const connText = document.getElementById("connText");
 
