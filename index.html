@@ -204,3 +204,19 @@
           doorIconBox.textContent = data.door === "OPEN" ? "🔓" : "🔒";
 
           document.getElementById("bannerMsg").textContent = data.banner;
+          document.getElementById("bannerCard").classList.toggle("alert", data.alarm === true);
+document.getElementById("tempVal").textContent = Number(data.temp).toFixed(1);
+document.getElementById("humVal").textContent = Number(data.hum).toFixed(1);
+document.getElementById("lastUpdated").textContent = "Last sync: " + new Date().toLocaleTimeString();
+} catch (err) { console.error(err); }
+});
+client.on("error", (err) => {
+connText.textContent = "Err: " + err.message;
+});
+client.on("offline", () => {
+connPill.classList.remove("online");
+connText.textContent = "Offline";
+});
+} else {
+document.getElementById("connText").textContent = "CDN Blocked";
+}
