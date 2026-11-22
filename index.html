@@ -176,7 +176,7 @@
   <script>
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
 
-    const HIVEMQ_URL = "wss://://hivemq.com";
+    const HIVEMQ_URL = "wss://broker.emqx.io:8084/mqtt";
     const MQTT_TOPIC = "homeguard/secret_847291_mm/status";
 
     if (typeof mqtt !== "undefined") {
